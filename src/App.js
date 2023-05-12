@@ -237,14 +237,18 @@ function App() {
                   {resultadoGeral.proteinas.toFixed(2)} g
                 </span>
                 {refeicoes.map((refeicao) => (
-                  <span>
-                    {refeicao.nome}:{" "}
-                    {(
-                      (refeicao.resultado.proteinas * 100) /
-                      resultadoGeral.proteinas
-                    ).toFixed(2)}
-                    %
-                  </span>
+                  <>
+                   {refeicao.resultado && (
+                    <span>
+                      {refeicao.nome}:{" "}
+                      {(
+                        (refeicao.resultado.proteinas * 100) /
+                        resultadoGeral.proteinas
+                      ).toFixed(2)}
+                      %
+                    </span>
+                   )}
+                  </>
                 ))}
               </div>
               <div style={{ display: "flex", flexDirection: "column" }}>
@@ -253,14 +257,18 @@ function App() {
                   {resultadoGeral.carboidratos.toFixed(2)} g{" "}
                 </span>
                 {refeicoes.map((refeicao) => (
-                  <span>
-                    {refeicao.nome}:{" "}
-                    {(
-                      (refeicao.resultado.carboidratos * 100) /
-                      resultadoGeral.carboidratos
-                    ).toFixed(2)}
-                    %
-                  </span>
+                  <>
+                   {refeicao.resultado && (
+                    <span>
+                      {refeicao.nome}:{" "}
+                      {(
+                        (refeicao.resultado.carboidratos * 100) /
+                        resultadoGeral.carboidratos
+                      ).toFixed(2)}
+                      %
+                    </span>
+                   )}
+                  </>
                 ))}
               </div>
               <div style={{ display: "flex", flexDirection: "column" }}>
@@ -269,14 +277,18 @@ function App() {
                   {resultadoGeral.calorias.toFixed(2)} kcal
                 </span>
                 {refeicoes.map((refeicao) => (
-                  <span>
-                    {refeicao.nome}:{" "}
-                    {(
-                      (refeicao.resultado.calorias * 100) /
-                      resultadoGeral.calorias
-                    ).toFixed(2)}
-                    %
-                  </span>
+                  <>
+                  { refeicao.resultado && (
+                    <span>
+                      {refeicao.nome}:{" "}
+                      {(
+                        (refeicao.resultado.calorias * 100) /
+                        resultadoGeral.calorias
+                      ).toFixed(2)}
+                      %
+                    </span>
+                  )}
+                  </>
                 ))}
               </div>
             </div>
