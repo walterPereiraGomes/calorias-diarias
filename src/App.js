@@ -3,6 +3,7 @@ import "./App.css";
 import {
   Autocomplete,
   Button,
+  CircularProgress,
   InputLabel,
   MenuItem,
   Select,
@@ -16,6 +17,7 @@ function App() {
   const [refeicoes, setRefeicoes] = useState([]);
   const [openModalAlimentos, setOpenModalAlimentos] = useState(false);
   const [resultadoGeral, setResultadoGeral] = useState(false);
+  const [load, setLoad] = useState(false);
 
   const montaQuery = (items) => {
     return items
@@ -24,6 +26,10 @@ function App() {
   };
 
   const calcular = async () => {
+    if(!refeicoes.length) {
+      alert('Adicione alimentos!')
+    }
+    setLoad(true)
     const queries = refeicoes.map((refeicao) => {
       return montaQuery(refeicao.items);
     });
@@ -60,6 +66,7 @@ function App() {
       });
       setRefeicoes(refeicoesCopia);
       setResultadoGeral(objGeral);
+      setLoad(false)
     });
   };
 
@@ -110,7 +117,7 @@ function App() {
           variant="contained"
           style={{ backgroundColor: "#569DAA", color: "#CBEDD5" }}
         >
-          Adicionar Alimentos
+          Adicionar Refeição
         </Button>
         <Button
           variant="contained"
@@ -198,7 +205,10 @@ function App() {
           </div>
         ))}
       </div>
-      {resultadoGeral && (
+      
+      {load ? (
+        <CircularProgress style={{ color: "#CBEDD5" }} size={50}/>
+      ) : resultadoGeral && (
         <div style={{ width: "100%" }}>
           <h2 style={{ color: "#CBEDD5" }}>Resultado Geral</h2>
           <div
