@@ -85,7 +85,8 @@ function App() {
         flexDirection: "column",
         alignItems: "center",
         backgroundColor: "#577D86",
-        height: "100vh",
+        minHeight: "100vh",
+        paddingBottom: 30
       }}
     >
       <ModalAlimentos

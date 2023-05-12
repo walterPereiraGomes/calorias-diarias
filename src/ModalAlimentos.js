@@ -1,43 +1,12 @@
 import React, { useState } from "react";
 import { Autocomplete, Button, Modal, TextField } from "@mui/material";
+import { alimentos } from "./alimentos";
 
 export const ModalAlimentos = ({
   visible,
   salvarRefeicao,
   cancelarRefeicao,
 }) => {
-  const alimentos = [
-    {
-      label: "Peito de frango",
-      value: "chicken breast",
-      unidadeMedida: "g",
-    },
-    {
-      label: "Arroz",
-      value: "rice",
-      unidadeMedida: "g",
-    },
-    {
-      label: "Feijão",
-      value: "bean",
-      unidadeMedida: "g",
-    },
-    {
-      label: "Ovo",
-      value: "egg",
-      unidadeMedida: "unidade",
-    },
-    {
-      label: "Pão",
-      value: "bread",
-      unidadeMedida: "unidade",
-    },
-    {
-      label: "Batara",
-      value: "potato",
-      unidadeMedida: "g",
-    },
-  ];
   const alimentoVazio = { nome: "", quantidade: "" };
   const [alimentosSelecionados, setAlimentosSelecionados] = useState([
     alimentoVazio,
