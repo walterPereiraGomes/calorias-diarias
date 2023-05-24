@@ -13,6 +13,23 @@ import { useEffect, useState } from "react";
 import { getNutrition } from "./axios";
 import { ModalAlimentos } from "./ModalAlimentos";
 
+const PorcentagemGeral = ({nome, geral, valor}) => {
+  return (
+    <> 
+      <span>{nome}:{" "}</span>
+      { geral ? (
+        <span>
+          {(
+            (valor * 100) /
+            geral
+          ).toFixed(2)}
+          %
+        </span>
+      ) : (<span>-</span>)}
+    </>
+  )
+}
+
 function App() {
   const [refeicoes, setRefeicoes] = useState([]);
   const [openModalAlimentos, setOpenModalAlimentos] = useState(false);
@@ -45,11 +62,15 @@ function App() {
           calorias: 0,
           proteinas: 0,
           carboidratos: 0,
+          fibras: 0,
+          gorduras: 0
         };
         result.data.items.forEach((item) => {
           obj.proteinas += item.protein_g;
           obj.calorias += item.calories;
           obj.carboidratos += item.carbohydrates_total_g;
+          obj.fibras += item.fiber_g;
+          obj.gorduras += item.fat_total_g;
         });
         refeicaoCopia.resultado = obj;
         refeicoesCopia[index] = refeicaoCopia;
@@ -58,11 +79,15 @@ function App() {
         calorias: 0,
         proteinas: 0,
         carboidratos: 0,
+        fibras: 0,
+        gorduras: 0,
       };
       refeicoesCopia.forEach((r) => {
         objGeral.proteinas += r.resultado.proteinas;
         objGeral.calorias += r.resultado.calorias;
         objGeral.carboidratos += r.resultado.carboidratos;
+        objGeral.fibras += r.resultado.fibras;
+        objGeral.gorduras += r.resultado.gorduras;
       });
       setRefeicoes(refeicoesCopia);
       setResultadoGeral(objGeral);
@@ -75,8 +100,6 @@ function App() {
   }, [refeicoes]);
 
   const salvarRefeicao = (novaRefeicao) => {
-    console.log("refeicoes :>> ", refeicoes);
-    console.log("novaRefeicao :>> ", novaRefeicao);
     setRefeicoes((prev) => [...prev, novaRefeicao]);
     setOpenModalAlimentos(false);
   };
@@ -115,7 +138,7 @@ function App() {
         <Button
           onClick={() => setOpenModalAlimentos(true)}
           variant="contained"
-          style={{ backgroundColor: "#569DAA", color: "#CBEDD5" }}
+          style={{ backgroundColor: "#569DAA", color: "#CBEDD5", width: '30%' }}
         >
           Adicionar Refeição
         </Button>
@@ -125,6 +148,7 @@ function App() {
             backgroundColor: "#569DAA",
             marginLeft: 5,
             color: "#CBEDD5",
+            width: '30%'
           }}
           onClick={calcular}
         >
@@ -146,7 +170,7 @@ function App() {
               width: "100%",
               maxWidth: 800,
               backgroundColor: "#62B6B7",
-              borderRadius: 15,
+              borderRadius: 20,
               paddingTop: 20,
               paddingBottom: 20,
               marginBottom: 20,
@@ -173,31 +197,46 @@ function App() {
                 style={{
                   marginInline: 40,
                   backgroundColor: "#CBEDD5",
-                  paddingInline: 30,
                   paddingBottom: 10,
                   paddingTop: 10,
                   marginTop: 30,
-                  borderRadius: 15,
+                  borderRadius: 20,
                 }}
               >
                 <span style={{ fontSize: 20 }}>Resultado</span>
                 <div
                   style={{
                     display: "flex",
+                    flexDirection: 'column',
                     justifyContent: "space-between",
                   }}
                 >
-                  <div style={{ display: "flex", flexDirection: "column" }}>
-                    <span>Proteína:</span>
-                    <span>{parseInt(refeicao.resultado.proteinas)} g</span>
+                  <div style={{ display: 'flex', justifyContent: 'space-evenly', marginBottom: 10}}>
+                    <div style={{ display: "flex", flexDirection: "column", width: 150, alignItems: 'center' }}>
+                      <span>Proteína:</span>
+                      <span>{parseInt(refeicao.resultado.proteinas)} g</span>
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "column", width: 150, alignItems: 'center' }}>
+                      <span>Carboidratos:</span>
+                      <span>{parseInt(refeicao.resultado.carboidratos)} g </span>
+                    </div>
                   </div>
-                  <div style={{ display: "flex", flexDirection: "column" }}>
-                    <span>Carboidratos:</span>
-                    <span>{parseInt(refeicao.resultado.carboidratos)} g </span>
+                  <div style={{ display: 'flex', justifyContent: 'space-evenly', marginBottom: 10, width: '100%'}}>
+                    <div style={{ display: "flex", flexDirection: "column", width: 150, alignItems: 'center' }}>
+                      <span>Calorias:</span>
+                      <span>{parseInt(refeicao.resultado.calorias)} kcal</span>
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "column", width: 150, alignItems: 'center' }}>
+                      <span>Fibras:</span>
+                      <span>{parseInt(refeicao.resultado.fibras)} g</span>
+                    </div>
                   </div>
-                  <div style={{ display: "flex", flexDirection: "column" }}>
-                    <span>Calorias:</span>
-                    <span>{parseInt(refeicao.resultado.calorias)} kcal</span>
+                  <div style={{ display: 'flex', justifyContent: 'space-evenly', marginBottom: 10}}>
+                  <div style={{ display: "flex", flexDirection: "column", width: 150, alignItems: 'center' }}>
+                    <span>Gorduras:</span>
+                    <span>{parseInt(refeicao.resultado.gorduras)} g</span>
+                  </div>
+
                   </div>
                 </div>
               </div>
@@ -210,7 +249,7 @@ function App() {
         <CircularProgress style={{ color: "#CBEDD5" }} size={50}/>
       ) : resultadoGeral && (
         <div style={{ width: "100%" }}>
-          <h2 style={{ color: "#CBEDD5" }}>Resultado Geral</h2>
+          <h2 style={{ color: "#CBEDD5" }}>Resumo Diário</h2>
           <div
             style={{
               display: "flex",
@@ -221,75 +260,82 @@ function App() {
             <div
               style={{
                 display: "flex",
-                justifyContent: "space-evenly",
-                borderRadius: 5,
+                flexDirection: 'column',
+                borderRadius: 20,
                 width: "100%",
                 maxWidth: 800,
-                backgroundColor: "#CBEDD5",
+                backgroundColor: "#62B6B7",
                 minWidth: 300,
                 paddingTop: 20,
                 paddingBottom: 20,
               }}
             >
-              <div style={{ display: "flex", flexDirection: "column" }}>
-                <span>Proteína:</span>
-                <span style={{ marginBottom: 20 }}>
-                  {resultadoGeral.proteinas.toFixed(2)} g
-                </span>
-                {refeicoes.map((refeicao) => (
-                  <>
-                   {refeicao.resultado && (
-                    <span>
-                      {refeicao.nome}:{" "}
-                      {(
-                        (refeicao.resultado.proteinas * 100) /
-                        resultadoGeral.proteinas
-                      ).toFixed(2)}
-                      %
-                    </span>
-                   )}
-                  </>
-                ))}
+              <div style={{display: 'flex', justifyContent: 'space-evenly', marginBottom: 20}}>
+                <div style={{ display: "flex", flexDirection: "column", backgroundColor: '#CBEDD5', padding: 40, borderRadius: 20, width: '25%' }}>
+                  <strong>Total de Proteínas:</strong>
+                  <span style={{ marginBottom: 20 }}>
+                    {resultadoGeral.proteinas.toFixed(2)} g
+                  </span>
+                  {refeicoes.map((refeicao) => (
+                    <>
+                    {refeicao.resultado && (
+                      <PorcentagemGeral nome={refeicao.nome} geral={resultadoGeral?.proteinas} valor={refeicao.resultado?.proteinas} />
+                    )}
+                    </>
+                  ))}
+                </div>
+                <div style={{ display: "flex", flexDirection: "column", backgroundColor: '#CBEDD5', padding: 40, borderRadius: 20, width: '25%'}}>
+                  <strong>Total de Carboidratos:</strong>
+                  <span style={{ marginBottom: 20 }}>
+                    {resultadoGeral.carboidratos.toFixed(2)} g{" "}
+                  </span>
+                  {refeicoes.map((refeicao) => (
+                    <>
+                    {refeicao.resultado && (
+                      <PorcentagemGeral nome={refeicao.nome} geral={resultadoGeral?.carboidratos} valor={refeicao.resultado?.carboidratos} />
+                    )}
+                    </>
+                  ))}
+                </div>
               </div>
-              <div style={{ display: "flex", flexDirection: "column" }}>
-                <span>Carboidratos:</span>
-                <span style={{ marginBottom: 20 }}>
-                  {resultadoGeral.carboidratos.toFixed(2)} g{" "}
-                </span>
-                {refeicoes.map((refeicao) => (
-                  <>
-                   {refeicao.resultado && (
-                    <span>
-                      {refeicao.nome}:{" "}
-                      {(
-                        (refeicao.resultado.carboidratos * 100) /
-                        resultadoGeral.carboidratos
-                      ).toFixed(2)}
-                      %
-                    </span>
-                   )}
-                  </>
-                ))}
+              <div style={{display: 'flex', justifyContent: 'space-evenly', marginBottom: 20}}>
+                <div style={{ display: "flex", flexDirection: "column", backgroundColor: '#CBEDD5', padding: 40, borderRadius: 20, width: '25%'}}>
+                  <strong>Total de Calorias:</strong>
+                  <span style={{ marginBottom: 20 }}>
+                    {resultadoGeral.calorias.toFixed(2)} kcal
+                  </span>
+                  {refeicoes.map((refeicao) => (
+                    <>
+                    { refeicao.resultado && (
+                      <PorcentagemGeral nome={refeicao.nome} geral={resultadoGeral?.calorias} valor={refeicao.resultado?.calorias} />
+                    )}
+                    </>
+                  ))}
+                </div>
+                <div style={{ display: "flex", flexDirection: "column", backgroundColor: '#CBEDD5', padding: 40, borderRadius: 20, width: '25%' }}>
+                  <strong>Total de Fibras:</strong>
+                  <span style={{ marginBottom: 20 }}>
+                    {resultadoGeral.fibras.toFixed(2)} g
+                  </span>
+                  {refeicoes.map((refeicao) => (
+                    <PorcentagemGeral nome={refeicao.nome} geral={resultadoGeral?.fibras} valor={refeicao.resultado?.fibras} />
+                  ))}
+                </div>
               </div>
-              <div style={{ display: "flex", flexDirection: "column" }}>
-                <span>Calorias:</span>
-                <span style={{ marginBottom: 20 }}>
-                  {resultadoGeral.calorias.toFixed(2)} kcal
-                </span>
-                {refeicoes.map((refeicao) => (
-                  <>
-                  { refeicao.resultado && (
-                    <span>
-                      {refeicao.nome}:{" "}
-                      {(
-                        (refeicao.resultado.calorias * 100) /
-                        resultadoGeral.calorias
-                      ).toFixed(2)}
-                      %
-                    </span>
-                  )}
-                  </>
-                ))}
+              <div style={{display: 'flex', justifyContent: 'space-evenly', marginBottom: 20}}>
+                <div style={{ display: "flex", flexDirection: "column", backgroundColor: '#CBEDD5', padding: 40, borderRadius: 20, width: '25%' }}>
+                  <strong>Total de Gorduras:</strong>
+                  <span style={{ marginBottom: 20 }}>
+                    {resultadoGeral.gorduras.toFixed(2)} g
+                  </span>
+                  {refeicoes.map((refeicao) => (
+                    <>
+                    { refeicao.resultado && (
+                      <PorcentagemGeral nome={refeicao.nome} geral={resultadoGeral?.gorduras} valor={refeicao.resultado?.gorduras} />
+                    )}
+                    </>
+                  ))}
+                </div>
               </div>
             </div>
           </div>

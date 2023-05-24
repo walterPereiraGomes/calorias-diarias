@@ -1,5 +1,10 @@
 export const alimentos = [
   {
+    label: "Whey Protein",
+    value: "whey protein",
+    unidadeMedida: "g",
+  },
+  {
     label: "Arroz",
     value: "rice",
     unidadeMedida: "g",
@@ -95,36 +100,6 @@ export const alimentos = [
     unidadeMedida: "g",
   },
   {
-    label: "Banana",
-    value: "banana",
-    unidadeMedida: "unidade",
-  },
-  {
-    label: "Maçã",
-    value: "apple",
-    unidadeMedida: "unidade",
-  },
-  {
-    label: "Laranja",
-    value: "orange",
-    unidadeMedida: "unidade",
-  },
-  {
-    label: "Morango",
-    value: "strawberries",
-    unidadeMedida: "g",
-  },
-  {
-    label: "Mirtilo",
-    value: "blueberries",
-    unidadeMedida: "g",
-  },
-  {
-    label: "Framboesa",
-    value: "raspberries",
-    unidadeMedida: "g",
-  },
-  {
     label: "Amêndoas",
     value: "almonds",
     unidadeMedida: "g",
@@ -135,9 +110,84 @@ export const alimentos = [
     unidadeMedida: "g",
   },
   {
-    label: "Castanha de caju",
-    value: "cashews",
-    unidadeMedida: "g",
+    label: "Maçã",
+    value: "apple",
+    unidadeMedida: "unidade"
+  },
+  {
+    label: "Banana",
+    value: "banana",
+    unidadeMedida: "unidade"
+  },
+  {
+    label: "Laranja",
+    value: "orange",
+    unidadeMedida: "unidade"
+  },
+  {
+    label: "Uva",
+    value: "grape",
+    unidadeMedida: "unidade"
+  },
+  {
+    label: "Morango",
+    value: "strawberry",
+    unidadeMedida: "unidade"
+  },
+  {
+    label: "Maçã",
+    value: "apple",
+    unidadeMedida: "unidade"
+  },
+  {
+    label: "Banana",
+    value: "banana",
+    unidadeMedida: "unidade"
+  },
+  {
+    label: "Laranja",
+    value: "orange",
+    unidadeMedida: "unidade"
+  },
+  {
+    label: "Mexerica",
+    value: "tangerine",
+    unidadeMedida: "unidade"
+  },
+  {
+    label: "Maracujá",
+    value: "passion fruit",
+    unidadeMedida: "unidade"
+  },
+  {
+    label: "Pão",
+    value: "bread",
+    unidadeMedida: "unidade"
+  },
+  {
+    label: "Uva",
+    value: "grape",
+    unidadeMedida: "unidade"
+  },
+  {
+    label: "Morango",
+    value: "strawberry",
+    unidadeMedida: "unidade"
+  },
+  {
+    label: "Pêra",
+    value: "pear",
+    unidadeMedida: "unidade"
+  },
+  {
+    label: "Melancia",
+    value: "watermelon",
+    unidadeMedida: "unidade"
+  },
+  {
+    label: "Jaca",
+    value: "jackfruit",
+    unidadeMedida: "unidade"
   },
   {
     label: "Sementes de girassol",

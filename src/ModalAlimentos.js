@@ -148,6 +148,10 @@ export const ModalAlimentos = ({
           <Button
             style={{ backgroundColor: "#569DAA", color: "#CBEDD5" }}
             onClick={() => {
+              if(!alimentosSelecionados.length) {
+                alert("Selecione corretamente os alimentos!")
+                return;
+              }
               salvarRefeicao({
                 nome: nomeRefeicao,
                 items: alimentosSelecionados,
