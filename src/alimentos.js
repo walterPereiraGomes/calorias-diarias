@@ -20,6 +20,11 @@ export const alimentos = [
     unidadeMedida: "g",
   },
   {
+    label: "Aveia em flocos",
+    value: "rolled oats",
+    unidadeMedida: "g",
+  },
+  {
     label: "Carne vermelha magra",
     value: "lean beef",
     unidadeMedida: "g",
